@@ -240,7 +240,11 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-
+  {
+    'davidmh/mdx.nvim',
+    config = true,
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -398,7 +402,6 @@ require('lazy').setup({
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
-        --
         -- defaults = {
         --   mappings = {
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
