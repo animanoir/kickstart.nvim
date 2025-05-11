@@ -245,7 +245,24 @@ require('lazy').setup({
     config = true,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
-  'github/copilot.vim',
+  {
+    'CopilotC-Nvim/CopilotChat.nvim',
+    dependencies = {
+      {
+        'github/copilot.vim',
+        init = function()
+          vim.g.copilot_enabled = false -- Disables Copilot suggestions on startup.
+          vim.g.copilot_no_tab_map = true -- Disables Copilot's default tab mapping.
+        end,
+      },
+      { 'nvim-lua/plenary.nvim', branch = 'master' },
+    },
+    opts = {
+      -- Optional configuration
+      model = 'gemini-2.5-pro',
+      chat_autocomplete = false,
+    },
+  },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
