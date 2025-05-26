@@ -239,6 +239,10 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+  },
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -327,7 +331,6 @@ require('lazy').setup({
       },
     },
   },
-
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -341,7 +344,6 @@ require('lazy').setup({
   --
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
-
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
@@ -760,7 +762,17 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
+      require('conform').setup {
+        formatters_by_ft = {
+          lua = { 'stylua' },
+          -- Conform will run multiple formatters sequentially
+          python = { 'isort', 'black' },
+          -- You can customize some of the format options for the filetype (:help conform.format)
+          rust = { 'rustfmt', lsp_format = 'fallback' },
+          -- Conform will run the first available formatter
+          javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        },
+      }
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_installation = false,
